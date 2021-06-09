@@ -19,13 +19,14 @@ function Task2 () {
         maze[start.y][start.x] = 1
 
         let siblings = getValidSib(start)
+        console.log(siblings)
 
         if(siblings.length > 0) {
             for(let i = 0; i < siblings.length; i++) {
                 let current = siblings[i]
 
                 let isSolved = current.x === end.x && current.y === end.y
-                let notVisited = maze[current.y][current.x] !==5
+                let notVisited = maze[current.y][current.x] !==1
 
                 if(isSolved || (notVisited && checkPath(current,end))) {
                     return true
@@ -40,27 +41,35 @@ function Task2 () {
 
         let cords = []
 
-        if(maze[y-1] !== undefined) {
+        let directions = []
+
+        if(maze[y-1] !== undefined && maze[y-1] === '+') {
             cords.push({ x:x, y:y-1, val: maze[y-1][x] })
+            directions.push("top") 
         }
-        if(maze[y+1] !== undefined) {
+        if(maze[y+1] !== undefined && maze[y+1] === '+') {
             cords.push({ x:x, y:y+1, val: maze[y+1][x] })
+            directions.push("bottom") 
+ 
         }
-        if(maze[y][x-1] !== undefined) {
+        if(maze[y][x-1] !== undefined && maze[y][x-1] === '+' ) {
             cords.push({ x:x-1, y:y, val: maze[y][x-1] })
+            directions.push('left') 
         }
-        if(maze[y][x+1] !== undefined) {
+        if(maze[y][x+1] !== undefined && maze[y][x+1] === '+' ) {
             cords.push({ x:x+1, y:y, val: maze[y][x+1] })
+            directions.push('right')  
         }
 
-        return cords.filter(el => el.val === '+')
+        console.log(directions)
+        return cords
     }
 
 
     if(checkPath( {x:4, y:3}, {x:0, y:3})) {
         console.log('The way is founded')
     } else {
-        console.log('The way is not founded, try another')
+        console.log('The way is not founded')
     }    
 
     return (
