@@ -15,18 +15,22 @@ function Task2 () {
 
     console.log(maze)
 
+
     function checkPath (start, end) {
-        maze[start.y][start.x] = 1
+        maze[start.y][start.x] = 0
 
         let siblings = getValidSib(start)
         console.log(siblings)
 
         if(siblings.length > 0) {
             for(let i = 0; i < siblings.length; i++) {
+
+                let directions = []
+
                 let current = siblings[i]
 
                 let isSolved = current.x === end.x && current.y === end.y
-                let notVisited = maze[current.y][current.x] !==1
+                let notVisited = maze[current.y][current.x] !==0
 
                 if(isSolved || (notVisited && checkPath(current,end))) {
                     return true
@@ -41,28 +45,20 @@ function Task2 () {
 
         let cords = []
 
-        let directions = []
-
-        if(maze[y-1] !== undefined && maze[y-1] === '+') {
+        if(maze[y-1] !== undefined) {
             cords.push({ x:x, y:y-1, val: maze[y-1][x] })
-            directions.push("top") 
         }
-        if(maze[y+1] !== undefined && maze[y+1] === '+') {
-            cords.push({ x:x, y:y+1, val: maze[y+1][x] })
-            directions.push("bottom") 
- 
+        if(maze[y+1] !== undefined) {
+            cords.push({ x:x, y:y+1, val: maze[y+1][x] }) 
         }
-        if(maze[y][x-1] !== undefined && maze[y][x-1] === '+' ) {
-            cords.push({ x:x-1, y:y, val: maze[y][x-1] })
-            directions.push('left') 
+        if(maze[y][x-1] !== undefined) {
+            cords.push({ x:x-1, y:y, val: maze[y][x-1] }) 
         }
-        if(maze[y][x+1] !== undefined && maze[y][x+1] === '+' ) {
-            cords.push({ x:x+1, y:y, val: maze[y][x+1] })
-            directions.push('right')  
+        if(maze[y][x+1] !== undefined ) {
+            cords.push({ x:x+1, y:y, val: maze[y][x+1] }) 
         }
 
-        console.log(directions)
-        return cords
+        return cords.filter(el => el.val === '+')
     }
 
 
